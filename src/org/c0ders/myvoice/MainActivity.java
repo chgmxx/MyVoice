@@ -7,9 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 //import android.widget.ArrayAdapter;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TableRow;
+import android.widget.TextView;
 import java.util.Locale;
 
 public class MainActivity extends Activity implements TextToSpeech.OnInitListener {
@@ -70,9 +73,19 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		});
     }
 
+	/**
+	 * send String to TTS
+	 * @param String whatsHappening 
+	 */
 	private void speak(String whatsHappening) {
 		mTts.speak(whatsHappening, TextToSpeech.QUEUE_FLUSH, null);
 	}
+	
+	/**
+	 * Add String to history
+	 * @param String whatsHappening 
+	 */
+	private void toHistory(String whatsHappening){}
 	
 	public void onInit(int i) {
 		if (i == TextToSpeech.SUCCESS) {

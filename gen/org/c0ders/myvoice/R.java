@@ -15,6 +15,7 @@ public final class R {
     }
     public static final class id {
         public static final int clearButton=0x7f050003;
+        public static final int history=0x7f050004;
         public static final int mainl=0x7f050000;
         public static final int speakButton=0x7f050002;
         public static final int text2speechInput=0x7f050001;
