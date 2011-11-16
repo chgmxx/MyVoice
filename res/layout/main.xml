@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+	android:id="@+id/mainl"
+	android:stretchColumns="*"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<TableRow>
+		<EditText 
+			android:id="@+id/text2speechInput"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:gravity="top"
+			android:singleLine="false" 
+			android:lines="5"
+			android:layout_span="3"
+			android:hint="What's happening?" />
+	</TableRow>
+	
+	<TableRow>
+		<Button
+			android:id="@+id/speakButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Speak"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentRight="true" />
+
+		<Button
+			android:id="@+id/clearButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="clear text"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentRight="true" />
+		
+		<!--<Spinner 
+			android:id="@+id/spinner"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:prompt="@string/locales"
+		/>//-->
+	</TableRow>
+</TableLayout>
