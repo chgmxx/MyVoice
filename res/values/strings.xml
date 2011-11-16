@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">my voice</string>
+	<string name="editBoxHint">What\'s happening?</string>
 	<!--<string name="locales">Choose a planet</string>
 	<string-array name="locales_array">
         <item>Deutsch</item>

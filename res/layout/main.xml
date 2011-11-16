@@ -12,9 +12,9 @@
 			android:layout_height="wrap_content" 
 			android:gravity="top"
 			android:singleLine="false" 
-			android:lines="5"
-			android:layout_span="3"
-			android:hint="What's happening?" />
+			android:lines="3"
+			android:layout_span="2"
+			android:hint="@string/editBoxHint" />
 	</TableRow>
 	
 	<TableRow>

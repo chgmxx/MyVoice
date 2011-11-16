@@ -3,7 +3,7 @@ package org.c0ders.myvoice;
 import android.app.Activity;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
+import android.util.Log;	
 import android.view.View;
 import android.view.View.OnClickListener;
 //import android.widget.ArrayAdapter;
