@@ -7,12 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 //import android.widget.ArrayAdapter;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TableRow;
-import android.widget.TextView;
 import java.util.Locale;
 
 public class MainActivity extends Activity implements TextToSpeech.OnInitListener {
@@ -22,7 +18,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	private Button clearButton;
 	private Button speakButton;
 	private EditText text2speechInput;
-	private Spinner locales;
 	
 	private TextToSpeech mTts;
 	
