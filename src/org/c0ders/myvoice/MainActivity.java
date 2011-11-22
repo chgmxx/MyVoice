@@ -2,7 +2,9 @@ package org.c0ders.myvoice;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;	
 import android.view.Menu;
@@ -23,14 +25,29 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	
 	private TextToSpeech mTts;
 	
+	private Locale locale;
+	
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-		Log.i(TAG, "Start MainActivity");
-		
 		setContentView(R.layout.main);
+		
+		/**
+		 * Load preferences
+		 */
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		prefs.getString("localesPref", "localeValues");
+		
+		if("german".equals(prefs.getString("localesPref", "localeValues"))){
+			this.locale = Locale.GERMAN;
+		}else if("english".equals(prefs.getString("localesPref", "localeValues"))){
+			this.locale = Locale.ENGLISH;
+		} else {
+			this.locale = Locale.getDefault();
+		}
 		
 		this.clearButton = (Button)  this.findViewById(R.id.clearButton);
 		this.speakButton = (Button)  this.findViewById(R.id.speakButton);
@@ -80,7 +97,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	
 	public void onInit(int i) {
 		if (i == TextToSpeech.SUCCESS) {
-			int result = mTts.setLanguage(Locale.getDefault());
+			int result = mTts.setLanguage(this.locale);
 			
 			if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
 				Log.w(TAG, "Language not supported: "+Locale.getDefault());
@@ -109,7 +126,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
 		if(0==item.getItemId()){
-			startActivity(new Intent(this, SettingsActivity.class));
+			startActivity(new Intent(getBaseContext(), SettingsActivity.class));
 			return true;
 		}
 		return false;

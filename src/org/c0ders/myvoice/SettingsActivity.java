@@ -1,7 +1,6 @@
 package org.c0ders.myvoice;
 
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 
 public class SettingsActivity extends PreferenceActivity {
