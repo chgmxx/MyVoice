@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schmas.android.com/apk/res/android">
+	<PreferenceCategory android:title="Locales">
+		<ListPreference 
+			android:entries="@array/localeArray"
+			android:entryValues="@array/localeValues" 
+			android:key="localesPref" 
+			android:title="Set locale" 
+			android:summary="Switch between locales" 
+			android:defaultValue="german" />
+	</PreferenceCategory>
+</PreferenceScreen>

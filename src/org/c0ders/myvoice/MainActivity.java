@@ -1,12 +1,14 @@
 package org.c0ders.myvoice;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;	
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-//import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import java.util.Locale;
@@ -25,19 +27,14 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        
+		Log.i(TAG, "Start MainActivity");
+		
+		setContentView(R.layout.main);
 		
 		this.clearButton = (Button)  this.findViewById(R.id.clearButton);
 		this.speakButton = (Button)  this.findViewById(R.id.speakButton);
 		this.text2speechInput = (EditText) this.findViewById(R.id.text2speechInput);
-		
-		/*this.locales = (Spinner) this.findViewById(R.id.spinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-				this, R.array.locales_array, android.R.layout.simple_spinner_item
-		);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		this.locales.setAdapter(adapter);*/
-		
 		
 		mTts = new TextToSpeech(this,this);
 		
@@ -50,7 +47,6 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			public void onClick(View view) {
 				EditText text2speechInput = (EditText) findViewById(R.id.text2speechInput);
 				text2speechInput.setText("");
-				Log.i(TAG, "clear text2speechEditBox");
 			}
 		});
 		
@@ -103,4 +99,19 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
         }
         super.onDestroy();
     }
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		menu.add(Menu.NONE, 0, 0, "Settings");
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		if(0==item.getItemId()){
+			startActivity(new Intent(this, SettingsActivity.class));
+			return true;
+		}
+		return false;
+	}
 }

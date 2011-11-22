@@ -33,15 +33,7 @@
 			android:text="clear text"
 			android:layout_alignParentTop="true"
 			android:layout_alignParentRight="true" />
-		
-		<!--<Spinner 
-			android:id="@+id/spinner"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:prompt="@string/locales"
-		/>//-->
+	
 	</TableRow>
 	
-	<TableRow android:id="@+id/history" />
-		
 </TableLayout>
