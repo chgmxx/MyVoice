@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;	
@@ -13,6 +14,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class MainActivity extends Activity implements TextToSpeech.OnInitListener {
@@ -26,7 +29,25 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	private TextToSpeech mTts;
 	
 	private Locale locale;
+	private float pitch;
+	private float speechRate;
+	private boolean save;
 	
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+
+	public void setPitch(float pitch) {
+		this.pitch = pitch;
+	}
+	
+	public void setSpeechRate(float speechRate){
+		this.speechRate = speechRate;
+	}
+	
+	public void setSave(boolean save){
+		this.save = save;
+	}
 	
     /** Called when the activity is first created. */
     @Override
@@ -39,21 +60,25 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		 * Load preferences
 		 */
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		prefs.getString("localesPref", "localeValues");
 		
 		if("german".equals(prefs.getString("localesPref", "localeValues"))){
-			this.locale = Locale.GERMAN;
+			this.setLocale(Locale.GERMAN);
 		}else if("english".equals(prefs.getString("localesPref", "localeValues"))){
-			this.locale = Locale.ENGLISH;
+			this.setLocale(Locale.ENGLISH);
 		} else {
-			this.locale = Locale.getDefault();
+			this.setLocale(Locale.getDefault());
 		}
+		
+		this.setPitch(Float.valueOf(prefs.getString("pitchPref", "1")));
+		this.setSpeechRate(Float.valueOf(prefs.getString("speechRatePref", "1")));
+		this.setSave(prefs.getBoolean("savePref", false));
+		
 		
 		this.clearButton = (Button)  this.findViewById(R.id.clearButton);
 		this.speakButton = (Button)  this.findViewById(R.id.speakButton);
 		this.text2speechInput = (EditText) this.findViewById(R.id.text2speechInput);
 		
-		mTts = new TextToSpeech(this,this);
+		mTts = new TextToSpeech(this, this);
 		
 		/**
 		 * OnClickListener for 'clearButton'
@@ -83,24 +108,40 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 
 	/**
 	 * send String to TTS
+	 * 
 	 * @param String whatsHappening 
 	 */
 	private void speak(String whatsHappening) {
 		mTts.speak(whatsHappening, TextToSpeech.QUEUE_FLUSH, null);
+		
+		/**
+		 * @TODO crap 
+		 */
+		if(true==this.save){
+			
+			String storagePath = Environment.getExternalStorageDirectory().getPath();
+			Calendar rightNow = Calendar.getInstance();
+			
+			long timestamp = rightNow.getTimeInMillis() / 1000;
+			String saveToFile = storagePath + "/" + timestamp + ".wav";
+			
+			int i = mTts.synthesizeToFile(whatsHappening, null, saveToFile);
+		}
 	}
-	
-	/**
-	 * Add String to history
-	 * @param String whatsHappening 
-	 */
-	private void toHistory(String whatsHappening){}
 	
 	public void onInit(int i) {
 		if (i == TextToSpeech.SUCCESS) {
 			int result = mTts.setLanguage(this.locale);
 			
 			if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-				Log.w(TAG, "Language not supported: "+Locale.getDefault());
+				Log.w(TAG, "Language not supported: "+this.locale);
+			}else{
+				mTts.setPitch(this.pitch);
+				Log.i(TAG, "set pitch to: "+this.pitch);
+				
+				mTts.setSpeechRate(this.speechRate);
+				Log.i(TAG, "set speechRate to: "+this.speechRate);
+			
 			}
 		} else {
 			Log.w(TAG, "Could not init TextToSpeech :(");

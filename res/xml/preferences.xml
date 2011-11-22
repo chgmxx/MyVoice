@@ -9,4 +9,34 @@
 			android:summary="Switch between locales" 
 			android:defaultValue="german" />
 	</PreferenceCategory>
+	<PreferenceCategory android:title="Pitch and Speech rate">
+		<ListPreference 
+			android:entries="@array/pitchArray"
+			android:entryValues="@array/pitchValues" 
+			android:key="pitchPref"
+			android:title="Set pitch" 
+			android:summary="The pitch. 1 is the normal pitch, lower values lower the tone of the synthesized voice, greater values increase it." 
+			android:defaultValue="1"
+		/>
+		<ListPreference 
+			android:entries="@array/speechArray"
+			android:entryValues="@array/speechValues" 
+			android:key="speechRatePref"
+			android:title="Set speech rate" 
+			android:summary="The speech rate. 1 is the normal speed, lower values slow down the speech (0.5 is half the normal speech rate), greater values accelerate it ." 
+			android:defaultValue="1"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Save">
+		<CheckBoxPreference
+			android:key="savePref"
+			android:defaultValue="false"
+			android:title="Save as audio?" 
+			android:summaryOn="Save to /sdcard/myvoice/" 
+			android:summaryOff="Save to sdcard?" 
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="About">
+	
+	</PreferenceCategory>
 </PreferenceScreen>
