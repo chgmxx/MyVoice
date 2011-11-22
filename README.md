@@ -1,5 +1,5 @@
 # MyVoice
-### Simple android app with TextToSpeech
+### Simple android app with TextToSpeech and PreferencesActivity
 
 # Icon
 App launcher icon from the Faenza Icon Set by tiheum. 
