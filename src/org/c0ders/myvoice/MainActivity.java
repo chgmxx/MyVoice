@@ -15,7 +15,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends Activity implements TextToSpeech.OnInitListener {
@@ -114,19 +117,29 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	private void speak(String whatsHappening) {
 		mTts.speak(whatsHappening, TextToSpeech.QUEUE_FLUSH, null);
 		
-		/**
-		 * @TODO crap 
-		 */
 		if(true==this.save){
-			
-			String storagePath = Environment.getExternalStorageDirectory().getPath();
-			Calendar rightNow = Calendar.getInstance();
-			
-			long timestamp = rightNow.getTimeInMillis() / 1000;
-			String saveToFile = storagePath + "/" + timestamp + ".wav";
-			
-			int i = mTts.synthesizeToFile(whatsHappening, null, saveToFile);
+			this.saveToFile(whatsHappening);
 		}
+	}
+	
+	private void saveToFile(String whatsHappening){
+		
+		String extStorage = Environment.getExternalStorageDirectory().getPath();
+		
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd-HHmmssSSS");
+		Date now = new Date();
+		String strDate = sdfDate.format(now);
+		
+		
+		File folder = new File(extStorage + "/myvoice");
+		
+		if(!folder.exists()) {
+			folder.mkdir();
+		}
+		
+		String saveToFile = extStorage + "/myvoice/" + strDate + ".wav";
+
+		int i = mTts.synthesizeToFile(whatsHappening, null, saveToFile);
 	}
 	
 	public void onInit(int i) {
