@@ -14,10 +14,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -36,18 +34,38 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	private float speechRate;
 	private boolean save;
 	
+	/**
+	 * set locale 
+	 * 
+	 * @param Locale locale 
+	 */
 	public void setLocale(Locale locale) {
 		this.locale = locale;
 	}
 
+	/**
+	 * set pitch
+	 * 
+	 * @param float pitch 
+	 */
 	public void setPitch(float pitch) {
 		this.pitch = pitch;
 	}
 	
+	/**
+	 * set speechrate
+	 * 
+	 * @param speechRate 
+	 */
 	public void setSpeechRate(float speechRate){
 		this.speechRate = speechRate;
 	}
 	
+	/**
+	 * set save as audio
+	 * 
+	 * @param boolean save 
+	 */
 	public void setSave(boolean save){
 		this.save = save;
 	}
@@ -122,6 +140,11 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		}
 	}
 	
+	/**
+	 * save to file - e.g. /sdcard/myvoice/yyyyMMdd-HHmmssSSS.wav
+	 * 
+	 * @param String whatsHappening 
+	 */
 	private void saveToFile(String whatsHappening){
 		
 		String extStorage = Environment.getExternalStorageDirectory().getPath();
@@ -142,6 +165,11 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 		int i = mTts.synthesizeToFile(whatsHappening, null, saveToFile);
 	}
 	
+	/**
+	 * Init TTS
+	 * 
+	 * @param i 
+	 */
 	public void onInit(int i) {
 		if (i == TextToSpeech.SUCCESS) {
 			int result = mTts.setLanguage(this.locale);
