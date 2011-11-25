@@ -6,7 +6,10 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -89,20 +92,31 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 		mTts.speak(whatsHappening, TextToSpeech.QUEUE_FLUSH, null);
 		
 		if(true==this.isSave()){
-			this.save(whatsHappening);
+			this.saveToFile(whatsHappening);
 		}
 	}
 	
 	/**
+	 * save to file - e.g. /sdcard/myvoice/yyyyMMdd-HHmmssSSS.wav
 	 * 
-	 * @param whatsHappening 
+	 * @param String whatsHappening 
 	 */
-	public void save(String whatsHappening){
-		String storagePath = Environment.getExternalStorageDirectory().getPath();
-		Calendar rightNow = Calendar.getInstance();
-
-		long timestamp = rightNow.getTimeInMillis() / 1000;
-		String saveToFile = storagePath + "/" + timestamp + ".wav";
+	private void saveToFile(String whatsHappening){
+		
+		String extStorage = Environment.getExternalStorageDirectory().getPath();
+		
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd-HHmmssSSS");
+		Date now = new Date();
+		String strDate = sdfDate.format(now);
+		
+		
+		File folder = new File(extStorage + "/myvoice");
+		
+		if(!folder.exists()) {
+			folder.mkdir();
+		}
+		
+		String saveToFile = extStorage + "/myvoice/" + strDate + ".wav";
 
 		int i = mTts.synthesizeToFile(whatsHappening, null, saveToFile);
 	}
