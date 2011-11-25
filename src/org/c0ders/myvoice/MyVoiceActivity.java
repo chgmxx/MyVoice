@@ -1,8 +1,11 @@
 package org.c0ders.myvoice;
 
+import org.c0ders.myvoice.models.*;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;	
@@ -13,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class MyVoiceActivity extends Activity implements OnSharedPreferenceChangeListener {
 	
 	private static String TAG = "myvoice";
 	
