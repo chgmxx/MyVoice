@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;	
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,11 +12,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-import java.util.Calendar;
-import java.util.Locale;
 
-public class MainActivity extends Activity implements TextToSpeech.OnInitListener {
+public class MainActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
 	
 	private static String TAG = "myvoice";
 	
@@ -26,28 +21,9 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 	private Button speakButton;
 	private EditText text2speechInput;
 	
-	private TextToSpeech mTts;
-	
-	private Locale locale;
-	private float pitch;
-	private float speechRate;
-	private boolean save;
-	
-	public void setLocale(Locale locale) {
-		this.locale = locale;
-	}
+	private TextToSpeechModel ttsm;
 
-	public void setPitch(float pitch) {
-		this.pitch = pitch;
-	}
-	
-	public void setSpeechRate(float speechRate){
-		this.speechRate = speechRate;
-	}
-	
-	public void setSave(boolean save){
-		this.save = save;
-	}
+	SharedPreferences prefs;
 	
     /** Called when the activity is first created. */
     @Override
@@ -56,32 +32,18 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
         
 		setContentView(R.layout.main);
 		
-		/**
-		 * Load preferences
-		 */
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		
-		if("german".equals(prefs.getString("localesPref", "localeValues"))){
-			this.setLocale(Locale.GERMAN);
-		}else if("english".equals(prefs.getString("localesPref", "localeValues"))){
-			this.setLocale(Locale.ENGLISH);
-		} else {
-			this.setLocale(Locale.getDefault());
-		}
-		
-		this.setPitch(Float.valueOf(prefs.getString("pitchPref", "1")));
-		this.setSpeechRate(Float.valueOf(prefs.getString("speechRatePref", "1")));
-		this.setSave(prefs.getBoolean("savePref", false));
-		
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		prefs.registerOnSharedPreferenceChangeListener(this);
+			
 		
 		this.clearButton = (Button)  this.findViewById(R.id.clearButton);
 		this.speakButton = (Button)  this.findViewById(R.id.speakButton);
 		this.text2speechInput = (EditText) this.findViewById(R.id.text2speechInput);
-		
-		mTts = new TextToSpeech(this, this);
+	
+		this.ttsm = new TextToSpeechModel(this);
 		
 		/**
-		 * OnClickListener for 'clearButton'
+		 * OnClickListener for clearButton
 		 */
 		this.clearButton.setOnClickListener(new OnClickListener() {
 			
@@ -100,85 +62,16 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			@Override
 			public void onClick(View view) {
 				EditText text2speechInput = (EditText) findViewById(R.id.text2speechInput);
-				speak(text2speechInput.getText().toString());
+				ttsm.speak(text2speechInput.getText().toString());
 				Log.i(TAG, "try to speak: "+text2speechInput.getText().toString());
 			}
 		});
     }
 
-	/**
-	 * send String to TTS
-	 * 
-	 * @param String whatsHappening 
-	 */
-	private void speak(String whatsHappening) {
-		mTts.speak(whatsHappening, TextToSpeech.QUEUE_FLUSH, null);
-		
-		/**
-		 * @TODO crap 
-		 */
-		if(true==this.save){
-			this.saveToFile(whatsHappening);
-		}
-	}
-	
-	/**
-	 * save to file - e.g. /sdcard/myvoice/yyyyMMdd-HHmmssSSS.wav
-	 * 
-	 * @param String whatsHappening 
-	 */
-	private void saveToFile(String whatsHappening){
-		
-		String extStorage = Environment.getExternalStorageDirectory().getPath();
-		
-		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd-HHmmssSSS");
-		Date now = new Date();
-		String strDate = sdfDate.format(now);
-		
-		
-		File folder = new File(extStorage + "/myvoice");
-		
-		if(!folder.exists()) {
-			folder.mkdir();
-		}
-		
-		String saveToFile = extStorage + "/myvoice/" + strDate + ".wav";
-
-		int i = mTts.synthesizeToFile(whatsHappening, null, saveToFile);
-	}
-	
-	/**
-	 * Init TTS
-	 * 
-	 * @param i 
-	 */
-	public void onInit(int i) {
-		if (i == TextToSpeech.SUCCESS) {
-			int result = mTts.setLanguage(this.locale);
-			
-			if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-				Log.w(TAG, "Language not supported: "+this.locale);
-			}else{
-				mTts.setPitch(this.pitch);
-				Log.i(TAG, "set pitch to: "+this.pitch);
-				
-				mTts.setSpeechRate(this.speechRate);
-				Log.i(TAG, "set speechRate to: "+this.speechRate);
-			
-			}
-		} else {
-			Log.w(TAG, "Could not init TextToSpeech :(");
-		}
-	}
-	
 	@Override
-    public void onDestroy() {
-        // Don't forget to shutdown!
-        if (mTts != null) {
-            mTts.stop();
-            mTts.shutdown();
-        }
-        super.onDestroy();
+	public void onDestroy() {
+		this.ttsm.destroy();
+		super.onDestroy();
     }
 	
 	@Override
@@ -194,5 +87,10 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1) {
+		this.ttsm = new TextToSpeechModel(this);
 	}
 }
