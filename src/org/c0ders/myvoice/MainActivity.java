@@ -2,10 +2,12 @@ package org.c0ders.myvoice;
 
 import org.c0ders.myvoice.models.*;
 
-
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;	
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnSharedPreferenceChangeListener {
 	
 	private static String TAG = "myvoice";
 	
@@ -23,6 +25,8 @@ public class MainActivity extends Activity {
 	private EditText text2speechInput;
 	
 	private TextToSpeechModel ttsm;
+
+	SharedPreferences prefs;
 	
     /** Called when the activity is first created. */
     @Override
@@ -30,6 +34,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         
 		setContentView(R.layout.main);
+		
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		prefs.registerOnSharedPreferenceChangeListener(this);
+			
 		
 		this.clearButton = (Button)  this.findViewById(R.id.clearButton);
 		this.speakButton = (Button)  this.findViewById(R.id.speakButton);
@@ -82,5 +90,10 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1) {
+		this.ttsm = new TextToSpeechModel(this);
 	}
 }

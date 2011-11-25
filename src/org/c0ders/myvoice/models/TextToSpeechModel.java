@@ -25,14 +25,6 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 	private float speechRate;
 	private boolean save;
 
-	public static String getTAG() {
-		return TAG;
-	}
-
-	public static void setTAG(String TAG) {
-		TextToSpeechModel.TAG = TAG;
-	}
-
 	public Locale getLocale() {
 		return locale;
 	}
@@ -80,6 +72,12 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 		this.setSpeechRate(Float.valueOf(prefs.getString("speechRatePref", "1")));
 		this.setSave(prefs.getBoolean("savePref", false));
 		
+		Log.i(TAG, "try to load TextToSpeech");
+		Log.i(TAG, "Loclale: "+this.getLocale().toString());
+		Log.i(TAG, "Pitch: "+this.getPitch());
+		Log.i(TAG, "SpeechRate: "+this.getSpeechRate());
+		Log.i(TAG, "save: "+this.isSave());
+		
 		this.mTts = new TextToSpeech(context, this);
 	}
 	
@@ -118,10 +116,7 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 				Log.w(TAG, "Language not supported: "+this.locale);
 			}else{
 				mTts.setPitch(this.getPitch());
-				Log.i(TAG, "set pitch to: "+this.pitch);
-				
 				mTts.setSpeechRate(this.getSpeechRate());
-				Log.i(TAG, "set speechRate to: "+this.speechRate);
 			}
 		} else {
 			Log.w(TAG, "Could not init TextToSpeech :(");
