@@ -25,7 +25,7 @@
 			android:title="Set speech rate" 
 			android:summary="The speech rate. 1 is the normal speed, lower values slow down the speech (0.5 is half the normal speech rate), greater values accelerate it ." 
 			android:defaultValue="1"
-		/>
+		/>		
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Save">
 		<CheckBoxPreference
@@ -37,6 +37,12 @@
 		/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="About">
-	
+		<Preference android:key="aboutPref" android:title="About myvoice" android:summary="">
+			<intent android:action="android.intent.action.VIEW" android:targetPackage="org.c0ders.myvoice" android:targetClass="org.c0ders.myvoice.AboutActivity" />
+		</Preference>
+		
+		<Preference android:key="licensePref" android:title="License" android:summary="DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE">
+			<intent android:action="android.intent.action.VIEW" android:targetPackage="org.c0ders.myvoice" android:targetClass="org.c0ders.myvoice.LicenseActivity" />
+		</Preference>
 	</PreferenceCategory>
 </PreferenceScreen>
