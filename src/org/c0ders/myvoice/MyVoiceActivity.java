@@ -7,8 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;	
+import android.preference.PreferenceManager;	
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,7 +77,8 @@ public class MyVoiceActivity extends Activity implements OnSharedPreferenceChang
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
-		menu.add(Menu.NONE, 0, 0, "Settings");
+		menu.add(Menu.NONE, 0, 0, "Settings").setIcon(R.drawable.settings);
+		
 		return super.onCreateOptionsMenu(menu);
 	}
 	
