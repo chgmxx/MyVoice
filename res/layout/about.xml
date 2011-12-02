@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout
 	android:id="@+id/aboutl"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical">
+	android:background="@drawable/background"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	
 	<TextView
+		android:layout_marginTop="10dp"
+		android:gravity="center_horizontal"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_column="1"
+		android:layout_height="wrap_content"
 		android:textColor="#fff"
-		android:text="@string/about" />
-</LinearLayout>
+		android:textSize="18sp"
+		android:text="@string/about" 
+	/>
+	
+	<Button 
+		android:id="@+id/iconset"
+		android:layout_marginTop="10dp"
+		android:gravity="center_horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textColor="#fff"
+		android:textStyle="bold"
+		android:textSize="18sp"
+		android:background="@null"
+		android:text="Icons by tiheum" 	
+		android:onClick="callIntent"
+	/>
+	
+	<Button
+		android:layout_marginTop="15dp"
+		android:padding="5dp"
+		android:id="@+id/gowitter" 
+		android:gravity="center_horizontal"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="#FFF"
+		android:textStyle="bold"
+		android:text="Find me on twitter"
+		android:background="@drawable/buttonshape_blue"
+		android:textSize="18sp"
+		android:onClick="callIntent"
+	/>
+	
+	<Button
+		android:layout_marginTop="15dp"
+		android:padding="5dp"
+		android:id="@+id/callgithub"
+		android:gravity="center_horizontal"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="#FFF"
+		android:textStyle="bold"
+		android:text="Fork me on GitHub"
+		android:background="@drawable/buttonshape_red"
+		android:textSize="18sp"
+		android:onClick="callIntent"
+	/>
+
+</TableLayout>

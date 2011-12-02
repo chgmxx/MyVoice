@@ -40,18 +40,18 @@
 		<View />
 		
 		<Button
-				android:id="@+id/clearButton"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="clear text"
-				android:layout_alignParentTop="true"
-				android:layout_alignParentRight="true" 
-				android:textStyle="bold" 
-				android:textSize="18sp"
-				android:textColor="#FFF"
-				android:padding="5dp"
-				android:background="@drawable/buttonshape_red"
-				 />
+			android:id="@+id/clearButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="clear text"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentRight="true" 
+			android:textStyle="bold" 
+			android:textSize="18sp"
+			android:textColor="#FFF"
+			android:padding="5dp"
+			android:background="@drawable/buttonshape_red"
+		/>
 
 	</TableRow>
 
