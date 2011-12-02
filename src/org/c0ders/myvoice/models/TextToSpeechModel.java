@@ -1,14 +1,17 @@
 package org.c0ders.myvoice.models;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -20,6 +23,8 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 	
 	private static String TAG = "myvoice TextToSpeechModel";
 	
+	private Context context;
+	
 	private TextToSpeech mTts = null;
 	private SharedPreferences prefs = null;
 	
@@ -28,6 +33,8 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 	private float speechRate;
 	private boolean save;
 
+	
+	
 	public Locale getLocale() {
 		return locale;
 	}
@@ -61,6 +68,9 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 	}
 	
 	public TextToSpeechModel(Context context) {
+		
+		this.context = context;
+		
 		this.prefs = PreferenceManager.getDefaultSharedPreferences(context);		
 		
 		if("german".equals(prefs.getString("localesPref", "localeValues"))){
@@ -116,9 +126,50 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 			folder.mkdir();
 		}
 		
-		String saveToFile = extStorage + "/myvoice/" + strDate + ".wav";
+		final String saveToFile = extStorage + "/myvoice/" + strDate + ".wav";
 
 		int i = mTts.synthesizeToFile(whatsHappening, null, saveToFile);
+		
+		if(TextToSpeech.SUCCESS == i){
+			if(true==this.isSave()){
+				DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						switch (which){
+							case DialogInterface.BUTTON_POSITIVE:
+								shareFile(saveToFile);
+							break;
+
+							case DialogInterface.BUTTON_NEGATIVE:
+
+							break;
+						}
+					}
+				};
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
+				builder.setMessage("Share file?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+			}
+		}
+	}
+	
+	/**
+	 * Share wav-File
+	 * 
+	 * @param String filename 
+	 */
+	private void shareFile(String filename){
+		
+		Log.i(TAG, "start share activity");
+		
+		File file = new File(filename);
+		
+		Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+		shareIntent.setType("audio/wav");
+		shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+		
+		this.context.startActivity(Intent.createChooser(shareIntent, "Share Voice File"));		
 	}
 
 	@Override
