@@ -85,12 +85,6 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 		this.setSpeechRate(Float.valueOf(prefs.getString("speechRatePref", "1")));
 		this.setSave(prefs.getBoolean("savePref", false));
 		
-		Log.i(TAG, "try to load TextToSpeech");
-		Log.i(TAG, "Loclale: "+this.getLocale().toString());
-		Log.i(TAG, "Pitch: "+this.getPitch());
-		Log.i(TAG, "SpeechRate: "+this.getSpeechRate());
-		Log.i(TAG, "save: "+this.isSave());
-		
 		this.mTts = new TextToSpeech(context, this);
 	}
 	
@@ -160,8 +154,6 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 	 * @param String filename 
 	 */
 	private void shareFile(String filename){
-		
-		Log.i(TAG, "start share activity");
 		
 		File file = new File(filename);
 		

@@ -66,7 +66,6 @@ public class MyVoiceActivity extends Activity implements OnSharedPreferenceChang
 			public void onClick(View view) {
 				EditText text2speechInput = (EditText) findViewById(R.id.text2speechInput);
 				ttsm.speak(text2speechInput.getText().toString());
-				Log.i(TAG, "try to speak: "+text2speechInput.getText().toString());
 			}
 		});
     }
