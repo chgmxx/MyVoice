@@ -9,4 +9,36 @@ DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE TERMS AND CONDITIONS FOR COPYING, DI
 0. You just DO WHAT THE FUCK YOU WANT TO.</string>
 	<string name="about">Thanks for using MyVoice.\nDeveloped by Manuel Wildauer.\n\nFeel free to fork, modify and have fun with it :)</string>
 	
+	<!-- Preferences //-->
+	
+	<string name="categoryLocaleTitle">Locale</string>
+	<string name="categoryPitchASpeedTitle">Pitch and speed</string>
+	<string name="categorySaveTitle">Save</string>
+	<string name="categoryShareTitle">Share</string>
+	<string name="categoryAboutTitle">About</string>
+	
+	<string name="localeTitle">Set locale</string>
+	<string name="localeSummary">Switch between locales</string>
+	
+	<string name="pitchTitle">Set pitch</string>
+	<string name="pitchSummary">The pitch. 1 is the normal pitch, lower values lower the tone of the synthesized voice, greater values increase it.</string>
+	
+	<string name="speechRate">Set speech rate</string>
+	<string name="speechSummary">The speech rate. 1 is the normal speed, lower values slow down the speech (0.5 is half the normal speech rate), greater values accelerate it .</string>
+	
+	<string name="saveTitle">Save as audio?</string>
+	<string name="saveSummaryOn">Save to /sdcard/myvoice/</string>
+	<string name="saveSummaryOff">Save to sdcard?</string>
+	
+	<string name="shareTitle">Ask for sharing?</string>
+	<string name="shareSummaryOn">Ask</string>
+	<string name="shareSummaryOff">Dont ask</string>
+	
+	<string name="aboutTitle">About myvoice</string>
+	<string name="aboutSummary"></string>
+	
+	<string name="licenseTitle">License</string>
+	<string name="licenseSummary">DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE</string>
+	
+	
 </resources>

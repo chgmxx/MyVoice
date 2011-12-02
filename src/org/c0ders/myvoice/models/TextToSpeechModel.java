@@ -11,8 +11,6 @@ import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -32,8 +30,7 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 	private float pitch;
 	private float speechRate;
 	private boolean save;
-
-	
+	private boolean share;
 	
 	public Locale getLocale() {
 		return locale;
@@ -57,6 +54,14 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 
 	public void setSave(boolean save) {
 		this.save = save;
+	}
+
+	public boolean isShare() {
+		return share;
+	}
+
+	public void setShare(boolean share) {
+		this.share = share;
 	}
 
 	public float getSpeechRate() {
@@ -84,7 +89,7 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 		this.setPitch(Float.valueOf(prefs.getString("pitchPref", "1")));
 		this.setSpeechRate(Float.valueOf(prefs.getString("speechRatePref", "1")));
 		this.setSave(prefs.getBoolean("savePref", false));
-		
+		this.setShare(prefs.getBoolean("sharePref", false));
 		this.mTts = new TextToSpeech(context, this);
 	}
 	
@@ -107,45 +112,43 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 	 */
 	private void saveToFile(String whatsHappening){
 		
-		String extStorage = Environment.getExternalStorageDirectory().getPath();
+		String strDate = Utils.dateFormat("yyyyMMdd-HHmmssSSS");
 		
-		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd-HHmmssSSS");
-		Date now = new Date();
-		String strDate = sdfDate.format(now);
+		final String saveToFile = Utils.getStoragePath() + strDate + ".wav";
 		
-		
-		File folder = new File(extStorage + "/myvoice");
-		
-		if(!folder.exists()) {
-			folder.mkdir();
-		}
-		
-		final String saveToFile = extStorage + "/myvoice/" + strDate + ".wav";
-
 		int i = mTts.synthesizeToFile(whatsHappening, null, saveToFile);
 		
 		if(TextToSpeech.SUCCESS == i){
-			if(true==this.isSave()){
-				DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						switch (which){
-							case DialogInterface.BUTTON_POSITIVE:
-								shareFile(saveToFile);
-							break;
-
-							case DialogInterface.BUTTON_NEGATIVE:
-
-							break;
-						}
-					}
-				};
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
-				builder.setMessage("Share file?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+			if(true==this.isSave() && this.isShare()){
+				this.shareDialog(saveToFile);
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param String saveToFile 
+	 */
+	private void shareDialog(final String saveToFile){
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which){
+					case DialogInterface.BUTTON_POSITIVE:
+						shareFile(saveToFile);
+					break;
+
+					case DialogInterface.BUTTON_NEGATIVE:
+
+					break;
+				}
+			}
+		};
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
+		builder.setMessage("Share file?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+
 	}
 	
 	/**

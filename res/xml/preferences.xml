@@ -1,47 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory android:title="Locales">
+	
+	<PreferenceCategory android:title="@string/categoryLocaleTitle">
 		<ListPreference 
 			android:entries="@array/localeArray"
 			android:entryValues="@array/localeValues" 
 			android:key="localesPref" 
-			android:title="Set locale" 
-			android:summary="Switch between locales" 
+			android:title="@string/localeTitle" 
+			android:summary="@string/localeSummary" 
 			android:defaultValue="german" />
 	</PreferenceCategory>
-	<PreferenceCategory android:title="Pitch and Speech rate">
+	<PreferenceCategory android:title="@string/categoryPitchASpeedTitle">
 		<ListPreference 
 			android:entries="@array/pitchArray"
 			android:entryValues="@array/pitchValues" 
 			android:key="pitchPref"
-			android:title="Set pitch" 
-			android:summary="The pitch. 1 is the normal pitch, lower values lower the tone of the synthesized voice, greater values increase it." 
+			android:title="@string/pitchTitle" 
+			android:summary="@string/pitchSummary" 
 			android:defaultValue="1"
 		/>
 		<ListPreference 
 			android:entries="@array/speechArray"
 			android:entryValues="@array/speechValues" 
 			android:key="speechRatePref"
-			android:title="Set speech rate" 
-			android:summary="The speech rate. 1 is the normal speed, lower values slow down the speech (0.5 is half the normal speech rate), greater values accelerate it ." 
+			android:title="@string/speechRate" 
+			android:summary="@string/speechSummary" 
 			android:defaultValue="1"
 		/>		
 	</PreferenceCategory>
-	<PreferenceCategory android:title="Save">
+	<PreferenceCategory android:title="@string/categorySaveTitle">
 		<CheckBoxPreference
 			android:key="savePref"
 			android:defaultValue="false"
-			android:title="Save as audio?" 
-			android:summaryOn="Save to /sdcard/myvoice/" 
-			android:summaryOff="Save to sdcard?" 
+			android:title="@string/saveTitle" 
+			android:summaryOn="@string/saveSummaryOn" 
+			android:summaryOff="@string/saveSummaryOff" 
 		/>
 	</PreferenceCategory>
-	<PreferenceCategory android:title="About">
-		<Preference android:key="aboutPref" android:title="About myvoice" android:summary="">
+	<PreferenceCategory android:title="@string/categoryShareTitle">
+		<CheckBoxPreference
+			android:key="sharePref"
+			android:defaultValue="false"
+			android:title="@string/shareTitle" 
+			android:summaryOn="@string/shareSummaryOn" 
+			android:summaryOff="@string/shareSummaryOff" 
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/categoryAboutTitle">
+		<Preference android:key="aboutPref" android:title="@string/aboutTitle" android:summary="@string/aboutSummary">
 			<intent android:action="android.intent.action.VIEW" android:targetPackage="org.c0ders.myvoice" android:targetClass="org.c0ders.myvoice.AboutActivity" />
 		</Preference>
 		
-		<Preference android:key="licensePref" android:title="License" android:summary="DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE">
+		<Preference android:key="licensePref" android:title="@string/licenseTitle" android:summary="@string/licenseSummary">
 			<intent android:action="android.intent.action.VIEW" android:targetPackage="org.c0ders.myvoice" android:targetClass="org.c0ders.myvoice.LicenseActivity" />
 		</Preference>
 	</PreferenceCategory>
