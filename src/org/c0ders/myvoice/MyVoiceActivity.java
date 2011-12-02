@@ -42,7 +42,7 @@ public class MyVoiceActivity extends Activity implements OnSharedPreferenceChang
 		this.clearButton = (Button)  this.findViewById(R.id.clearButton);
 		this.speakButton = (Button)  this.findViewById(R.id.speakButton);
 		this.text2speechInput = (EditText) this.findViewById(R.id.text2speechInput);
-	
+		
 		this.ttsm = new TextToSpeechModel(this);
 		
 		/**
