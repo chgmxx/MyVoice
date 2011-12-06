@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -90,6 +89,7 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 		this.setSpeechRate(Float.valueOf(prefs.getString("speechRatePref", "1")));
 		this.setSave(prefs.getBoolean("savePref", false));
 		this.setShare(prefs.getBoolean("sharePref", false));
+		
 		this.mTts = new TextToSpeech(context, this);
 	}
 	
@@ -147,7 +147,7 @@ final public class TextToSpeechModel implements TextToSpeech.OnInitListener {
 		};
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
-		builder.setMessage("Share file?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+		builder.setMessage("Share").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
 
 	}
 	

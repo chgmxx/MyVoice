@@ -11,17 +11,11 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 
 public class MyVoiceActivity extends Activity implements OnSharedPreferenceChangeListener {
 	
 	private static String TAG = "myvoice";
-	
-	private Button clearButton;
-	private Button speakButton;
-	private EditText text2speechInput;
 	
 	private TextToSpeechModel ttsm;
 
@@ -36,37 +30,8 @@ public class MyVoiceActivity extends Activity implements OnSharedPreferenceChang
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(this);
-			
-		
-		this.clearButton = (Button)  this.findViewById(R.id.clearButton);
-		this.speakButton = (Button)  this.findViewById(R.id.speakButton);
-		this.text2speechInput = (EditText) this.findViewById(R.id.text2speechInput);
 		
 		this.ttsm = new TextToSpeechModel(this);
-		
-		/**
-		 * OnClickListener for clearButton
-		 */
-		this.clearButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View view) {
-				EditText text2speechInput = (EditText) findViewById(R.id.text2speechInput);
-				text2speechInput.setText("");
-			}
-		});
-		
-		/**
-		 * OnClickListener for 'speakButton'
-		 */
-		this.speakButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View view) {
-				EditText text2speechInput = (EditText) findViewById(R.id.text2speechInput);
-				ttsm.speak(text2speechInput.getText().toString());
-			}
-		});
     }
 
 	@Override
@@ -78,7 +43,6 @@ public class MyVoiceActivity extends Activity implements OnSharedPreferenceChang
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		menu.add(Menu.NONE, 0, 0, "Settings").setIcon(R.drawable.settings);
-		
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -94,5 +58,15 @@ public class MyVoiceActivity extends Activity implements OnSharedPreferenceChang
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1) {
 		this.ttsm = new TextToSpeechModel(this);
+	}
+	
+	public void onClick(View view){
+		EditText text2speechInput = (EditText) findViewById(R.id.text2speechInput);
+		
+		if(R.id.speakButton==view.getId()){
+			ttsm.speak(text2speechInput.getText().toString());
+		}else if(R.id.clearButton==view.getId()){
+			text2speechInput.setText("");
+		}
 	}
 }

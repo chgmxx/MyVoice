@@ -40,5 +40,8 @@ DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE TERMS AND CONDITIONS FOR COPYING, DI
 	<string name="licenseTitle">License</string>
 	<string name="licenseSummary">DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE</string>
 	
-	
+	<!-- Links //-->
+	<string name="twitter">http://www.twitter.com/manuw</string>
+	<string name="github">https://github.com/manuw/MyVoice</string>
+	<string name="faenza">http://tiheum.deviantart.com/art/Faenza-Icons-173323228</string>
 </resources>

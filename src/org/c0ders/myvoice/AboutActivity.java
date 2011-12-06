@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 
 /**
- *
  * @author Manuel Wildauer <m.wildauer@gmail.com>
  */
 public class AboutActivity extends Activity {
@@ -17,7 +16,6 @@ public class AboutActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.about);
-		
 	}
 	
 	/**
