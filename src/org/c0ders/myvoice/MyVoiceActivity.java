@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.PreferenceManager;	
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,6 +60,10 @@ public class MyVoiceActivity extends Activity implements OnSharedPreferenceChang
 		this.ttsm = new TextToSpeechModel(this);
 	}
 	
+	/**
+	 * 
+	 * @param View view
+	 */
 	public void onClick(View view){
 		EditText text2speechInput = (EditText) findViewById(R.id.text2speechInput);
 		

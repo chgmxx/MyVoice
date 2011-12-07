@@ -27,11 +27,11 @@ public class AboutActivity extends Activity {
 		Intent intent = null;
 		
 		if(R.id.callgithub == view.getId()){
-			intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/manuw/MyVoice"));
+			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(this.getString(R.string.github)));
 		} else if(R.id.gowitter == view.getId()){
-			intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.twitter.com/manuw"));
+			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(this.getString(R.string.twitter)));
 		} else if(R.id.iconset == view.getId()){
-			intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://tiheum.deviantart.com/art/Faenza-Icons-173323228"));
+			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(this.getString(R.string.faenza)));
 		}
 		
 		startActivity(intent);
