@@ -14,7 +14,7 @@
 				android:layout_height="wrap_content" 
 				android:gravity="top"
 				android:singleLine="false" 
-				android:lines="8"
+				android:lines="10"
 				android:layout_span="3"
 				android:hint="@string/editBoxHint" 
 				android:textColor="#FFF"
